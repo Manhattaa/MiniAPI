@@ -2,5 +2,6 @@
 {
     public class Link2InterestDTO
     {
+        public string Url { get; set; }
     }
 }

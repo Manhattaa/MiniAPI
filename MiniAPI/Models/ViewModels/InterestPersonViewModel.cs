@@ -2,5 +2,6 @@
 {
     public class InterestPersonViewModel
     {
+        public string Url { get; set; }
     }
 }
