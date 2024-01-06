@@ -72,6 +72,8 @@ namespace MiniAPI.Handlers
             }
         }
 
+
+
         //GET -- Here we pull the data from the database and viewmodels for the User to see.
         public static IResult PullInterests(ApplicationContext context, int? results, string? search)
         {
@@ -96,14 +98,33 @@ namespace MiniAPI.Handlers
                 }
                 if (interests == null || !interests.Any())
                     return Results.NotFound(string.IsNullOrEmpty(search)
-                        ? "Error. No interests found."
-                        : $"Error. No interests found whose title starts with {search}");
+                        ? $"Error 404. No interests found whose title starts with {search}"
+                        : "Error 404: No valid interests found.");
 
                 return Results.Json(interests);
             }
             catch (Exception ex)
             {
                 return Utility.ErrorHandling(ex);
+            }
+        }
+        public static IResult PullInterestsForPeople(ApplicationContext context, string personId, string? search)
+        {
+            try
+            {
+                if (!DbHelper.PersonExists(context, personId))
+                    return Results.NotFound($"Error! Error! The person {personId} was not found.");
+
+                Person person = DbHelper.PullPeopleInterests(context, personId);
+
+                List<InterestPersonViewModel> personInterests =
+               person.Interests
+               .Select(i => new InterestPersonViewModel()
+               {
+                   Title = i.Title,
+                   Description = i.Description,
+               })
+               .ToList();
             }
         }
     }

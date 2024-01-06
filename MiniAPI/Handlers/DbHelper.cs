@@ -1,4 +1,6 @@
-﻿using MiniAPI.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using MiniAPI.Data;
+using MiniAPI.Models;
 
 namespace MiniAPI.Handlers
 {
@@ -12,6 +14,16 @@ namespace MiniAPI.Handlers
         public static bool InterestExists(ApplicationContext context, string id)
         {
             return context.Interests.Any(p => p.Id == id);
+        }
+
+        public static Person PullPeopleInterests(ApplicationContext context, string personId)
+        {
+            Person person = context.People
+                .Include(p => p.Interests)
+                .Where(p => p.Id == personId)
+                .Single();
+
+            return person;
         }
     }
 }

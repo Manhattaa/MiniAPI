@@ -17,12 +17,14 @@ namespace MiniAPI
             app.MapGet("/", () => "Hello World!");
 
 
-            //Post 
-            app.MapPost("/interests", InterestHandler.PushInterests);
-            app.MapPost("/people/{personId}/interests/{interestId}/links/", InterestHandler.PushInterestLinks);
+            //Post - Add new content to our databases
+            app.MapPost("/interests", InterestHandler.PushInterests); //Add new Interests
+            app.MapPost("/people/{personId}/interests/{interestId}/links/", InterestHandler.PushInterestLinks); //Add new InterestLinks!
 
 
-            //Get
+            //Get - Pull out the data from the database
+            app.MapGet("/people/{personId}/interests/{search?}", InterestHandler.PullInterestsForPeople); //Pull out Interests for the People in the Database.
+            app.MapGet("/interests/{search?}", InterestHandler.PullInterests);
 
             app.Run();
         }
