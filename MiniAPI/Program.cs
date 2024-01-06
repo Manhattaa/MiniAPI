@@ -22,7 +22,7 @@ namespace MiniAPI
             app.MapPost("/people/{personId}/interests/{interestId}/links/", InterestHandler.PushInterestLinks);
 
 
-            //Gets
+            //Get
 
             app.Run();
         }
