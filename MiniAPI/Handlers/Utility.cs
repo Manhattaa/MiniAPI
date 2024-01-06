@@ -20,5 +20,10 @@ namespace MiniAPI.Handlers
         {
             return $"{person.FirstName} {person.LastName}";
         }
+
+        public static IResult ErrorHandling(Exception ex)
+        {
+            return Results.Text($"Error Error: {ex.Message}");
+        }
     }
 }

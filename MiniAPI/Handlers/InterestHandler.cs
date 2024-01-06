@@ -75,14 +75,36 @@ namespace MiniAPI.Handlers
         //GET -- Here we pull the data from the database and viewmodels for the User to see.
         public static IResult PullInterests(ApplicationContext context, int? results, string? search)
         {
-            //PULL ALL INTERESTS
-            List<InterestViewModel> interests = context.Interests
+            try
+            {
+                //PULL ALL INTERESTS
+                List<InterestViewModel> interests = context.Interests
                 .Select(p => new InterestViewModel()
                 {
                     Id = p.Id,
                     Title = p.Title,
-                });
-            .ToList();
+                }).ToList();
+
+
+                if (!string.IsNullOrEmpty(search))
+                {
+                    interests = interests
+                        .Where(i => i.Title.ToLower()
+                        .StartsWith(search.ToLower()))
+                        .ToList();
+
+                }
+                if (interests == null || !interests.Any())
+                    return Results.NotFound(string.IsNullOrEmpty(search)
+                        ? "Error. No interests found."
+                        : $"Error. No interests found whose title starts with {search}");
+
+                return Results.Json(interests);
+            }
+            catch (Exception ex)
+            {
+                return Utility.ErrorHandling(ex);
+            }
         }
     }
 }
