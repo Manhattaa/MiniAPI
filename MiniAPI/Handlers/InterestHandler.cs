@@ -2,7 +2,6 @@
 using MiniAPI.Models.DTO;
 using MiniAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using MiniAPI.ViewModels;
 using System.Net;
 using MiniAPI.Models.ViewModels;
 
@@ -76,7 +75,7 @@ namespace MiniAPI.Handlers
 
         //GET -- Here we pull the data from the database and viewmodels for the User to see.
         //Here we pull the interests from the Database.
-        public static IResult PullInterests(ApplicationContext context, int? results, string? search)
+        public static IResult PullInterests(ApplicationContext context, int? results, string? search, int? page)
         {
             try
             {
@@ -95,8 +94,10 @@ namespace MiniAPI.Handlers
                         .Where(i => i.Title.ToLower()
                         .StartsWith(search.ToLower()))
                         .ToList();
-
                 }
+                interests = Pagination(interests, page, results);
+
+
                 if (interests == null || !interests.Any())
                     return Results.NotFound(string.IsNullOrEmpty(search)
                         ? $"Error 404. No interests found with a title that starts with {search}"
@@ -141,6 +142,26 @@ namespace MiniAPI.Handlers
             {
                 return Utility.ErrorHandling(ex);
             }
+        }
+
+        private static List<InterestViewModel> Pagination(List<InterestViewModel> interests, int? page, int? results)
+        {
+            if (page == null)
+                page = 1;
+
+            if (results == null)
+                results = interests.Count();
+
+            int skip = (int)((page - 1) * results);
+            int take = (int)results;
+
+            List<InterestViewModel> paginateInterests =
+                interests
+                .Skip(skip)
+                .Take(take)
+                .ToList();
+
+            return paginateInterests;
         }
     }
 }
