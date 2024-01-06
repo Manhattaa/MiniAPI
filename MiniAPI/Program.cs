@@ -16,6 +16,14 @@ namespace MiniAPI
 
             app.MapGet("/", () => "Hello World!");
 
+
+            //Post 
+            app.MapPost("/interests", InterestHandler.PushInterests);
+            app.MapPost("/people/{personId}/interests/{interestId}/links/", InterestHandler.PushInterestLinks);
+
+
+            //Gets
+
             app.Run();
         }
     }
