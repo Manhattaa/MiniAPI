@@ -25,5 +25,6 @@ namespace MiniAPI.Handlers
         {
             return Results.Text($"Error Error: {ex.Message}");
         }
+
     }
 }

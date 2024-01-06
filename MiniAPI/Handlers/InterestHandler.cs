@@ -75,6 +75,7 @@ namespace MiniAPI.Handlers
 
 
         //GET -- Here we pull the data from the database and viewmodels for the User to see.
+        //Here we pull the interests from the Database.
         public static IResult PullInterests(ApplicationContext context, int? results, string? search)
         {
             try
@@ -98,7 +99,7 @@ namespace MiniAPI.Handlers
                 }
                 if (interests == null || !interests.Any())
                     return Results.NotFound(string.IsNullOrEmpty(search)
-                        ? $"Error 404. No interests found whose title starts with {search}"
+                        ? $"Error 404. No interests found with a title that starts with {search}"
                         : "Error 404: No valid interests found.");
 
                 return Results.Json(interests);
@@ -113,11 +114,11 @@ namespace MiniAPI.Handlers
             try
             {
                 if (!DbHelper.PersonExists(context, personId))
-                    return Results.NotFound($"Error! Error! The person {personId} was not found.");
+                    return Results.NotFound($"Error 404. The person {personId} was not found.");
 
                 Person person = DbHelper.PullPeopleInterests(context, personId);
 
-                List<InterestPersonViewModel> personInterests =
+                List<InterestPersonViewModel> peopleInterest =
                person.Interests
                .Select(i => new InterestPersonViewModel()
                {
@@ -125,6 +126,20 @@ namespace MiniAPI.Handlers
                    Description = i.Description,
                })
                .ToList();
+
+                //if a search was created
+
+                if (!string.IsNullOrEmpty(search))
+                {
+                    peopleInterest = peopleInterest
+                        .Where(i => i.Title.ToLower().StartsWith(search.ToLower())).ToList();
+                }
+
+                return Results.Json(peopleInterest);
+            }
+            catch (Exception ex)
+            {
+                return Utility.ErrorHandling(ex);
             }
         }
     }

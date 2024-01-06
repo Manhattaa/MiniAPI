@@ -25,6 +25,7 @@ namespace MiniAPI
             //Get - Pull out the data from the database
             app.MapGet("/people/{personId}/interests/{search?}", InterestHandler.PullInterestsForPeople); //Pull out Interests for the People in the Database.
             app.MapGet("/interests/{search?}", InterestHandler.PullInterests);
+            app.MapGet("/interests/page/{page?}/results/{results?}/{search?}", InterestHandler.PullInterests);
 
             app.Run();
         }
