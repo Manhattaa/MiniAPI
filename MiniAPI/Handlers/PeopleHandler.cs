@@ -3,6 +3,8 @@ using MiniAPI.Models.DTO;
 using MiniAPI.Models;
 using MiniAPI.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using MiniAPI.Handlers;
 
 namespace MiniAPI.Handlers
 {
@@ -24,6 +26,31 @@ namespace MiniAPI.Handlers
                 context.People.Add(person);
                 context.SaveChanges();
                 return Results.Ok($"Person {Utilities.PullFirstLastName(person)} has been added.");
+            }
+            catch (Exception ex)
+            {
+
+                return Utilities.ErrorHandling(ex);
+            }
+        }
+        public static IResult PeopleToInterests(ApplicationContext context, string personId, string interestId) 
+        {
+            try
+            {
+                //check if both entities even exists
+                if (!DbHelper.PersonExists(context, personId))
+                    return Results.NotFound($"Error 404: The human known as {personId} does not exist");
+
+                if (!DbHelper.InterestExists(context, personId))
+                    return Results.NotFound($"Error 404: The interest: {interestId} was not found.");
+
+
+                Person person = DbHelper.PullPeopleInterests(context, personId);
+                Interest interest = DbHelper.PullInterest(context, interestId);
+
+                person.Interests
+                .Add(interest);
+                context.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -60,6 +87,31 @@ namespace MiniAPI.Handlers
             }
             catch (Exception ex)
             {
+                return Utilities.ErrorHandling(ex);
+            }
+        }
+        public static IResult PullLinkForPeople(ApplicationContext context, string personId)
+        {
+            try
+            {
+                //check if person exists in Database
+                if (!DbHelper.PersonExists(context, personId))
+                    return Results.NotFound($"Error 404: The human known as {personId} does not exist...yet");
+
+                List<InterestLinkViewModel> link2Interests =
+                    context.Links2Interests
+                    .Where(il => il.Person.Id == personId)
+                    .Select(il => new InterestLinkViewModel
+                    {
+                        Url = il.Url
+                    })
+                    .ToList();
+
+                return Results.Json(link2Interests);
+            }
+            catch (Exception ex)
+            {
+
                 return Utilities.ErrorHandling(ex);
             }
         }
