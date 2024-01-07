@@ -10,7 +10,7 @@ The functions include and aren't limited to the following;
 
   To use this API to it's full potential i would recommend downloading and installing an App
 
-The following ER Diagram and UML Diagram are meant as an API development program such as ![Alt text]([(https://www.postman.com/ "Postman")") Docker, Swagger, Postman or Insomnia.
+The following ER Diagram and UML Diagram are meant as an API development program such as [Postman](https://www.postman.com//). Docker, Swagger, Postman or Insomnia.
 
 ![Alt text](https://github.com/Manhattaa/MiniAPI/blob/master/MiniAPI/ER%20Diagram%20Fady%20Hatta.png "ER_Diagram")
 
