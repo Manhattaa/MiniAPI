@@ -155,13 +155,13 @@ namespace MiniAPI.Handlers
             int skip = (int)((page - 1) * results);
             int take = (int)results;
 
-            List<InterestViewModel> paginateInterests =
+            List<InterestViewModel> paginate =
                 interests
                 .Skip(skip)
                 .Take(take)
                 .ToList();
 
-            return paginateInterests;
+            return paginate;
         }
     }
 }
