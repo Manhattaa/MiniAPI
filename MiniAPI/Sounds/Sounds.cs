@@ -1,4 +1,8 @@
 ﻿using NAudio.Wave;
+using System;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MiniAPI.Sounds
 {
@@ -28,8 +32,6 @@ namespace MiniAPI.Sounds
                 {
                     Console.WriteLine($"Error playing sound: {ex.Message}");
                 }
-
-
             });
         }
     }

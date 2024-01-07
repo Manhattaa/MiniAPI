@@ -17,8 +17,8 @@ namespace MiniAPI
 
             var app = builder.Build();
 
-            app.MapGet("/", () => "Hello and welcome to this API.!\n\n" +
-            "Please enjoy this wonderful background music as you scroll\n\n" +
+            app.MapGet("/", () => "Hello and welcome to this API!\n\n" +
+            "Please enjoy this wonderful background music as you navigate.\n\n" +
             "The following GET and POST commands are used to navigate through this API \n" +
             "I would also recommend to use an application such as Swagger or Insomnia. +\n\n" +
 
@@ -54,7 +54,8 @@ namespace MiniAPI
             app.MapGet("/people/page/{page?}/results/{results?}/{search?}", PeopleHandler.PullPeople);
             app.MapGet("/people/{personId}/interests/links", PeopleHandler.PullLinkForPeople);
 
-            await Sounds.Sounds.PlaySoundAsync("elevatormusic.wav");
+            Task.Run(() => Sounds.Sounds.PlaySoundAsync("elevatormusic.wav"));
+
 
             app.Run();
         }
