@@ -16,7 +16,7 @@ namespace MiniAPI.Handlers
             {
                 Interest interest = new Interest()
                 {
-                    Id = Utility.BuildInterestId(interestDTO.Title),
+                    Id = Utilities.BuildInterestId(interestDTO.Title),
                     Title = interestDTO.Title,
                     Description = interestDTO.Description,
                 };
@@ -107,7 +107,7 @@ namespace MiniAPI.Handlers
             }
             catch (Exception ex)
             {
-                return Utility.ErrorHandling(ex);
+                return Utilities.ErrorHandling(ex);
             }
         }
         public static IResult PullInterestsForPeople(ApplicationContext context, string personId, string? search)
@@ -140,7 +140,7 @@ namespace MiniAPI.Handlers
             }
             catch (Exception ex)
             {
-                return Utility.ErrorHandling(ex);
+                return Utilities.ErrorHandling(ex);
             }
         }
 

@@ -16,6 +16,14 @@ namespace MiniAPI.Handlers
             return context.Interests.Any(p => p.Id == id);
         }
 
+
+        public static Interest PullInterest(ApplicationContext context, string interestId)
+        {
+            Interest interest = context.Interests
+                .Where(i => i.Id == interestId)
+                .Single();
+        }
+
         public static Person PullPeopleInterests(ApplicationContext context, string personId)
         {
             Person person = context.People

@@ -2,8 +2,10 @@
 
 namespace MiniAPI.Handlers
 {
-    public class Utility
+    public class Utilities
     {
+
+        //This page is like a settings page. You can call these functions to enable them to an instance of the code.
         //First letters of the First and last names to create an ID
         public static string BuildPersonId(string firstName, string lastName)
         {
