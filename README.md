@@ -17,7 +17,7 @@ The functions include and aren't limited to the following;
 
 **GET** is used to pull data from the database in accordance with the ViewModels.
 
-### **GET COMMANDS: **
+### GET COMMANDS: 
 
 /interests
 
