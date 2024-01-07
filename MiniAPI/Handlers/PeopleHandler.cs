@@ -41,7 +41,7 @@ namespace MiniAPI.Handlers
                 if (!DbHelper.PersonExists(context, personId))
                     return Results.NotFound($"Error 404: The human known as {personId} does not exist");
 
-                if (!DbHelper.InterestExists(context, personId))
+                if (!DbHelper.InterestExists(context, interestId))
                     return Results.NotFound($"Error 404: The interest: {interestId} was not found.");
 
 
@@ -51,6 +51,8 @@ namespace MiniAPI.Handlers
                 person.Interests
                 .Add(interest);
                 context.SaveChanges();
+
+                return Results.Ok($"Interest {interest.Title} has been added to {Utilities.PullFirstLastName(person)}");
             }
             catch (Exception ex)
             {
@@ -98,8 +100,8 @@ namespace MiniAPI.Handlers
                 if (!DbHelper.PersonExists(context, personId))
                     return Results.NotFound($"Error 404: The human known as {personId} does not exist...yet");
 
-                List<InterestLinkViewModel> link2Interests =
-                    context.Links2Interests
+                List<InterestLinkViewModel> linksInterests =
+                    context.LinksInterests
                     .Where(il => il.Person.Id == personId)
                     .Select(il => new InterestLinkViewModel
                     {
@@ -107,7 +109,7 @@ namespace MiniAPI.Handlers
                     })
                     .ToList();
 
-                return Results.Json(link2Interests);
+                return Results.Json(linksInterests);
             }
             catch (Exception ex)
             {

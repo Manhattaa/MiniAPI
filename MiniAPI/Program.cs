@@ -20,7 +20,8 @@ namespace MiniAPI
             //Post - Add new content to our databases
             app.MapPost("/interests", InterestHandler.PushInterests); //Add new Interests
             app.MapPost("/people/{personId}/interests/{interestId}/links/", InterestHandler.PushInterestLinks); //Add new InterestLinks!
-            app.MapPost("/people", PeopleHandler.PushPerson);
+            app.MapPost("/people", PeopleHandler.PushPerson); //add new people to the database
+            app.MapPost("/people/{personId}/interests/{interestId}", PeopleHandler.PeopleToInterests);
 
 
             //Get - Pull out the data from the database
@@ -29,6 +30,7 @@ namespace MiniAPI
             app.MapGet("/interests/page/{page?}/results/{results?}/{search?}", InterestHandler.PullInterests);
             app.MapGet("/people/{search?}", PeopleHandler.PullPeople); //Pull down people from the Database
             app.MapGet("/people/page/{page?}/results/{results?}/{search?}", PeopleHandler.PullPeople);
+            app.MapGet("/people/{personId}/interests/links", PeopleHandler.PullLinkForPeople);
 
             app.Run();
         }
