@@ -1,0 +1,36 @@
+﻿using NAudio.Wave;
+
+namespace MiniAPI.Sounds
+{
+    internal class Sounds
+    {
+        private static WaveOutEvent waveOut = new WaveOutEvent();
+
+        public static async Task PlaySoundAsync(string soundFileName)
+        {
+            await Task.Run(() =>
+            {
+                string soundFilePath = Path.Combine("Sounds", soundFileName);
+
+                try
+                {
+                    using (var audioFile = new AudioFileReader(soundFilePath))
+                    {
+                        waveOut.Init(audioFile);
+                        waveOut.Play();
+                        while (waveOut.PlaybackState == PlaybackState.Playing)
+                        {
+                            Thread.Sleep(100);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error playing sound: {ex.Message}");
+                }
+
+
+            });
+        }
+    }
+}

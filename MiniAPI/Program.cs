@@ -1,15 +1,17 @@
  using Microsoft.EntityFrameworkCore;
 using MiniAPI.Handlers;
 using MiniAPI.Data;
+using MiniAPI.Sounds;
 using System.Runtime.CompilerServices;
 
 namespace MiniAPI
 {
-    public class Program
+    class Program
     {
-        public static void Main(string[] args)
+        static async Task Main()
         {
-            var builder = WebApplication.CreateBuilder(args);
+
+            var builder = WebApplication.CreateBuilder();
             string connectionString = builder.Configuration.GetConnectionString("ApplicationContext");
             builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connectionString));
 
@@ -51,6 +53,8 @@ namespace MiniAPI
             app.MapGet("/people/{search?}", PeopleHandler.PullPeople); //Pull down people from the Database
             app.MapGet("/people/page/{page?}/results/{results?}/{search?}", PeopleHandler.PullPeople);
             app.MapGet("/people/{personId}/interests/links", PeopleHandler.PullLinkForPeople);
+
+            await Sounds.Sounds.PlaySoundAsync("elevatormusic.wav");
 
             app.Run();
         }
