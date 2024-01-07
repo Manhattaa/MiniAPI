@@ -1,6 +1,7 @@
  using Microsoft.EntityFrameworkCore;
 using MiniAPI.Handlers;
 using MiniAPI.Data;
+using System.Runtime.CompilerServices;
 
 namespace MiniAPI
 {
@@ -14,7 +15,26 @@ namespace MiniAPI
 
             var app = builder.Build();
 
-            app.MapGet("/", () => "Hello World!");
+            app.MapGet("/", () => "Hello and welcome to this API.!\n\n" +
+            "Please enjoy this wonderful background music as you scroll\n\n" +
+            "The following GET and POST commands are used to navigate through this API \n" +
+            "I would also recommend to use an application such as Swagger or Insomnia. +\n\n" +
+
+            "GET COMMANDS:\n" +
+            "/interests\n" +
+            "/interests/{search?}\n" +
+            "/people\n" +
+            "/people/{search?}\n" +
+            "/people/{personId}/interests\n" +
+            "/people/{personId}/interests/links\n\n" +
+
+            "PUSH COMMANDS: \n" +
+            "/interests - Add a new interest\n" +
+            "/people/ - Add a new student\n" +
+            "/people/{personId}/interests/{interestId}" +
+            "/people/{personId}/interests/{interestId}/links/");
+
+
 
 
             //Post - Add new content to our databases
