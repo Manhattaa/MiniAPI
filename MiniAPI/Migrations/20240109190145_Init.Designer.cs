@@ -11,7 +11,7 @@ using MiniAPI.Data;
 namespace MiniAPI.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20240105235942_Init")]
+    [Migration("20240109190145_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
