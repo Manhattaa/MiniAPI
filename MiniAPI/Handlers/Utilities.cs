@@ -9,7 +9,8 @@ namespace MiniAPI.Handlers
         //First letters of the First and last names to create an ID
         public static string BuildPersonId(string firstName, string lastName)
         {
-            return string.Join(' ', firstName[0], firstName[1], firstName[2], lastName[0], lastName[1], lastName[2]).Trim();
+            string initials = $"{firstName[0]}{firstName[1]}{firstName[2]}{lastName[0]}{lastName[1]}{lastName[2]}";
+            return initials.ToUpper();
         }
 
         //first 3 letters of the Interest to create an ID

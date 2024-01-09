@@ -85,6 +85,7 @@ namespace MiniAPI.Handlers
                 {
                     Id = p.Id,
                     Title = p.Title,
+                    Description = p.Description,
                 }).ToList();
 
 
